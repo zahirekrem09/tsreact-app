@@ -2,6 +2,7 @@ import React from "react";
 import { Route } from "react-router";
 import { Layout, Menu } from "antd";
 import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 
 const { Header, Content, Footer } = Layout;
 
@@ -21,6 +22,7 @@ function App() {
         style={{ padding: "50px", marginTop: 64 }}
       >
         <Route path="/register" component={SignUp} />
+        <Route path="/login" component={Login} />
       </Content>
       <Footer style={{ textAlign: "center" }}>
         Ant Design ©2018 Created by Ant UED

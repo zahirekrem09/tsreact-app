@@ -26,9 +26,9 @@ const SignUp = () => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      await api.post("/users/register", values);
-      message.success("This is a success message");
-      history.push("/login");
+      const response = await api.post("/users/register", values);
+      message.success(response.data.message);
+      history.push("/login", { newSignUp: true });
     } catch (error) {
       message.error((error as any).response.data.errorMessage);
     } finally {
