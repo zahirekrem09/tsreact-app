@@ -319,6 +319,9 @@ function Records() {
         columns={columns}
         dataSource={data}
         rowKey="id"
+        bordered
+        title={() => "Record List"}
+        // footer={() => "Footer"}
       />
     </React.Fragment>
   );
