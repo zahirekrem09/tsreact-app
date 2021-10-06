@@ -38,7 +38,6 @@ export const addCategory =
 export const updateCategory =
   // Partial is used to allow the user to update only the fields they want to
 
-
     (form: Partial<CategoryForm>, categoryId: number) =>
     async (dispatch: CategoryDispatch) => {
       dispatch({ type: "UPDATE_CATEGORY_START" });

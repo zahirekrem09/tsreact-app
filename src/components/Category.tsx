@@ -100,10 +100,12 @@ const Category = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      ellipsis: true,
     },
     {
       title: "Type",
       dataIndex: "type",
+      ellipsis: true,
       key: "id",
       render: (text: string, category: CategoryType) => {
         return (
@@ -118,6 +120,7 @@ const Category = () => {
       title: "Action",
       dataIndex: "id",
       key: "action",
+      ellipsis: true,
       render: (text: string, category: CategoryType) => (
         <Space size="middle">
           <Tooltip title="Edit">
@@ -160,7 +163,12 @@ const Category = () => {
   ];
   return (
     <>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
         <Button
           type="primary"
           onClick={() => showModal("new")}
