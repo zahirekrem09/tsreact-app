@@ -1,25 +1,47 @@
 import { Form, Input, Button, message, notification } from "antd";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
+import { AppState } from "../store";
+import { login } from "../store/action/userActions";
+import { LoginForm } from "../types/user";
 import api from "../utils/api";
 
 const Login = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state: AppState) => state.user);
   const location = useLocation<{ newSignUp?: boolean }>();
-  const onFinish = async (values: any) => {
-    try {
-      const { data } = await api.post("users/login", values);
-      message.success(data.message);
-      history.push("/login");
-      console.log({ data });
-    } catch (error) {
-      message.error((error as any).response.data.errorMessage);
-    }
+  const onFinish = async (values: LoginForm) => {
+    dispatch(login(values));
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
+  // Error Handling
+  useEffect(() => {
+    error && message.error(error);
+  }, [error]);
+
+  // Success Handling
+  useEffect(() => {
+    if (data.token) {
+      message.success(data.message);
+      history.push("/");
+    }
+  }, [data]);
+  // const onFinish = async (values: any) => {
+  //   try {
+  //     const { data } = await api.post("users/login", values);
+  //     message.success(data.message);
+  //     history.push("/login");
+  //     console.log({ data });
+  //   } catch (error) {
+  //     message.error((error as any).response.data.errorMessage);
+  //   }
+  // };
+
+  // const onFinishFailed = (errorInfo: any) => {
+  //   console.log("Failed:", errorInfo);
+  // };
 
   useEffect(() => {
     if (location?.state?.newSignUp) {
@@ -36,7 +58,7 @@ const Login = () => {
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      //onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
@@ -56,7 +78,7 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loading}>
           Submit
         </Button>
       </Form.Item>
